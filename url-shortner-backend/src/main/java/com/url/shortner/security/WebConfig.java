@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-        @Value("http://localhost:5173")
+        @Value("http://localhost:3000")
     String frontEndUrl;
 
     @Override

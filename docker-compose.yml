@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hiten@313001
+      MYSQL_DATABASE: urlshortnerdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build: ./url-shortner-backend
+    container_name: backend-container
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/urlshortnerdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: hiten@313001
+
+  frontend:  
+    build: ./url-shortner-frontend
+    container_name: frontend-container
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      VITE_BACKEND_URL: http://backend:8081
+      VITE_REACT_FRONT_END_URL: http://localhost:5173
+
+volumes:
+  mysql-data:
