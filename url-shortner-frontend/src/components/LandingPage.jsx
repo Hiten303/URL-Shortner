@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import Card from "./card";
+import Card from "./Card";
 import { useStoreContext } from "../contextApi/ContextApi";
 
 

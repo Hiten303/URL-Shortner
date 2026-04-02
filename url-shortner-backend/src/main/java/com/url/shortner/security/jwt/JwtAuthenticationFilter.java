@@ -3,7 +3,6 @@ package com.url.shortner.security.jwt;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,12 +29,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			                        HttpServletResponse response, 
 			                        FilterChain filterChain)
 			throws ServletException, IOException {
-		
+		System.out.println(">>> JWT FILTER EXECUTED <<<");
+
 		try {
 			// get JWT from header
 			String jwt=jwtTokenProvider.getJwtFromHeader(request);
 			
 			if(jwt != null && jwtTokenProvider.validateToken(jwt)) {
+
 				String username=jwtTokenProvider.getUserNameFromJwtToken(jwt);
 				UserDetails userDetails=userDetailsService.loadUserByUsername(username);
 				if(userDetails!= null) {
